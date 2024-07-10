@@ -30,7 +30,7 @@ const Login = () => {
         <BsChatLeftHeartFill fill='white' className='size-12 md:size-10' />
         <h1 className='font-bold text-5xl md:text-4xl text-white'>Sign In</h1>
         <Button
-          className='bg-white/10 hover:bg-white/30 gap-4 text-lg relative'
+          className='text-lg relative text-white'
           onClick={loginWithGoogle}
           disabled={loading}
         >
