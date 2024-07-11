@@ -12,13 +12,10 @@ export async function POST(request: Request) {
 
     const { email: userEmail } = AddSchema.parse({ email: body.email });
 
-    const response = await fetchRedis('get', `user:email:${userEmail}`);
-
-    const data = await response.json();
-
-    console.log(data);
-
-    const userID = data.result;
+    const userID = (await fetchRedis(
+      'get',
+      `user:email:${userEmail}`
+    )) as string;
 
     if (!userID) {
       return NextResponse.json(
@@ -43,11 +40,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const existingFriendRequest = await fetchRedis(
+    const existingFriendRequest = (await fetchRedis(
       'sismember',
       `user:${userID}:incoming_friend_requests`,
       existingSession.user.id
-    );
+    )) as 0 | 1;
 
     if (existingFriendRequest) {
       return NextResponse.json(
@@ -56,11 +53,11 @@ export async function POST(request: Request) {
       );
     }
 
-    const existingFriend = await fetchRedis(
+    const existingFriend = (await fetchRedis(
       'sismember',
       `user:${existingSession.user.id}:friends`,
       userID
-    );
+    )) as 0 | 1;
 
     if (existingFriend) {
       return NextResponse.json(
