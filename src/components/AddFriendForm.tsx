@@ -6,7 +6,6 @@ import { z } from 'zod';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -15,21 +14,19 @@ import {
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
 
-const FormSchema = z.object({
-  email: z.string().email({ message: 'Enter a valid email.' }),
-});
+import { AddSchema } from '@/lib/validation/addfriend';
 
 const AddFriendForm = () => {
-  const form = useForm<z.infer<typeof FormSchema>>({
-    resolver: zodResolver(FormSchema),
+  const form = useForm<z.infer<typeof AddSchema>>({
+    resolver: zodResolver(AddSchema),
     defaultValues: {
       email: '',
     },
   });
 
-  const onSubmit = async (data: z.infer<typeof FormSchema>) => {
+  const onSubmit = async (data: z.infer<typeof AddSchema>) => {
     try {
       await axios.post('/api/friends/add', {
         email: data.email,
@@ -41,10 +38,19 @@ const AddFriendForm = () => {
         description: 'Wait for the user to accept your request! :)',
       });
     } catch (error) {
-      toast({
-        variant: 'destructive',
-        title: 'Something went wrong.',
-      });
+      if (axios.isAxiosError(error)) {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: error.response?.data?.error || 'Something went wrong!',
+        });
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Error',
+          description: 'An unexpected error occurred.',
+        });
+      }
     }
   };
 
