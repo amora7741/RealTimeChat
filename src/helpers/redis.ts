@@ -7,8 +7,6 @@ export async function fetchRedis(
 ) {
   const fullURL = `${upstashURL}/${command}/${args.join('/')}`;
 
-  console.log(fullURL);
-
   const response = await fetch(fullURL, {
     headers: {
       Authorization: `Bearer ${upstashToken}`,

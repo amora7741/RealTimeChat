@@ -1,8 +1,8 @@
-const Home = async () => {
+const Home = () => {
   return (
-    <main>
-      <h1>Home Page</h1>
-    </main>
+    <div>
+      <h1>Default Page</h1>
+    </div>
   );
 };
 
