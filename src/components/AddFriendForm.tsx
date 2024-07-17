@@ -12,13 +12,16 @@ import {
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import LoadingButton from './LoadingButton';
 import { toast } from '@/components/ui/use-toast';
-import axios, { AxiosError } from 'axios';
+import axios from 'axios';
+import { useState } from'react';
 
 import { AddSchema } from '@/lib/validation/addfriend';
 
 const AddFriendForm = () => {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof AddSchema>>({
     resolver: zodResolver(AddSchema),
     defaultValues: {
@@ -28,6 +31,8 @@ const AddFriendForm = () => {
 
   const onSubmit = async (data: z.infer<typeof AddSchema>) => {
     try {
+      setLoading(true);
+
       await axios.post('/api/friends/add', {
         email: data.email,
       });
@@ -51,6 +56,8 @@ const AddFriendForm = () => {
           description: 'An unexpected error occurred.',
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -65,12 +72,12 @@ const AddFriendForm = () => {
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Add friend by E-Mail</FormLabel>
+              <FormLabel className='font-semibold text-lg'>Add friend by E-Mail</FormLabel>
               <div className='flex flex-col sm:flex-row gap-4'>
                 <FormControl>
-                  <Input placeholder='123@example.com' {...field} />
+                  <Input className='text-black' placeholder='123@example.com' {...field} />
                 </FormControl>
-                <Button type='submit'>Add</Button>
+                <LoadingButton type='submit' loading={loading}>Add</LoadingButton>
               </div>
 
               <FormMessage className='absolute right-0' />
