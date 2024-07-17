@@ -1,5 +1,5 @@
 import { WavyBackground } from "@/components/ui/background-waves";
-import { LucideIcon, UserRoundPlus } from "lucide-react";
+import { LucideIcon, UserRoundPlus, Users } from "lucide-react";
 import Link from "next/link";
 import { BsChatLeftHeartFill } from "react-icons/bs";
 
@@ -16,6 +16,12 @@ const sidebarOptions: SidebarOption[] = [
     name: "Add Friend",
     href: "/home/addfriend",
     Icon: UserRoundPlus
+  },
+  {
+    id: 2,
+    name: "Friend Requests",
+    href: "/home/requests",
+    Icon: Users
   }
 ]
 
@@ -32,11 +38,11 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
             <ul className='flex flex-col flex-1 gap-y-8'>
               <li>
                 <p className="font-bold uppercase text-lg">Your Chats</p>
-                <h1>// user chats</h1>
               </li>
+
               <li>
                 <p className="font-bold uppercase text-lg mb-2">Social</p>
-                <ul>
+                <ul className='space-y-2'>
                   {sidebarOptions.map((option) => (
                     <li key={option.id}>
                       <Link href={option.href}>
@@ -48,6 +54,10 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
                     </li>
                   ))}
                 </ul>
+              </li>
+
+              <li className="mt-auto">
+                <p>Hello</p>
               </li>
             </ul>
           </nav>
