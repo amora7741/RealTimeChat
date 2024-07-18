@@ -1,7 +1,7 @@
 import { WavyBackground } from '@/components/ui/background-waves';
 import { LucideIcon, UserRoundPlus, Users } from 'lucide-react';
 import Link from 'next/link';
-import { BsChatLeftHeartFill } from 'react-icons/bs';
+import { BsFillChatSquareHeartFill } from 'react-icons/bs';
 import LogoutPopover from '@/components/LogoutPopover';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
@@ -20,12 +20,6 @@ const sidebarOptions: SidebarOption[] = [
     href: '/home/addfriend',
     Icon: UserRoundPlus,
   },
-  {
-    id: 2,
-    name: 'Friend Requests',
-    href: '/home/requests',
-    Icon: Users,
-  },
 ];
 
 const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
@@ -36,7 +30,7 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
       <div className='w-screen h-screen lg:w-[90vw] lg:h-[90vh] overflow-auto flex bg-blue-300/70 text-white lg:rounded-xl backdrop-blur-xl'>
         <div className='h-full w-full overflow-y-auto max-w-xs flex flex-col gap-y-12 p-6 bg-blue-300/30 lg:rounded-tl-xl lg:rounded-bl-xl'>
           <Link className='w-fit' href='/home'>
-            <BsChatLeftHeartFill className='size-12' />
+            <BsFillChatSquareHeartFill className='size-12' />
           </Link>
 
           <nav className='flex flex-col flex-1'>
@@ -62,6 +56,8 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
                   ))}
                 </ul>
               </li>
+
+              <li></li>
 
               <li className='mt-auto'>
                 <LogoutPopover
