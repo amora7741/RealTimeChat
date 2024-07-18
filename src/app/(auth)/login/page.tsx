@@ -33,7 +33,7 @@ const Login = () => {
           fill='white'
           className='size-12 md:size-10'
         />
-        <h1 className='font-bold text-5xl md:text-4xl text-white'>Sign In</h1>
+        <h1 className='font-bold text-4xl text-white'>Sign In</h1>
         <LoadingButton loading={loading} onClick={loginWithGoogle}>
           <FcGoogle size={20} />
           Sign in with Google

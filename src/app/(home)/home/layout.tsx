@@ -1,10 +1,13 @@
 import { WavyBackground } from '@/components/ui/background-waves';
-import { LucideIcon, UserRoundPlus, Users } from 'lucide-react';
+import { LucideIcon, UserRoundPlus } from 'lucide-react';
 import Link from 'next/link';
 import { BsFillChatSquareHeartFill } from 'react-icons/bs';
 import LogoutPopover from '@/components/LogoutPopover';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
+import FriendRequestsLink from '@/components/FriendRequestsLink';
+import { fetchRedis } from '@/helpers/redis';
+import { notFound } from 'next/navigation';
 
 type SidebarOption = {
   id: number;
@@ -24,6 +27,17 @@ const sidebarOptions: SidebarOption[] = [
 
 const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
   const session = await getServerSession(authOptions);
+
+  if (!session) {
+    notFound();
+  }
+
+  const pendingRequestCount = (
+    (await fetchRedis(
+      'smembers',
+      `user:${session.user.id}:incoming_friend_requests`
+    )) as User[]
+  ).length;
 
   return (
     <WavyBackground backgroundFill='white'>
@@ -47,17 +61,21 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
                       <Link href={option.href}>
                         <div className='flex items-center p-2 rounded-lg hover:bg-white/10'>
                           <option.Icon className='size-7 mr-2 shrink-0' />
-                          <span className='truncate font-semibold'>
+                          <p className='truncate font-semibold'>
                             {option.name}
-                          </span>
+                          </p>
                         </div>
                       </Link>
                     </li>
                   ))}
+                  <li>
+                    <FriendRequestsLink
+                      sessionID={session?.user.id}
+                      initialPendingRequests={pendingRequestCount}
+                    />
+                  </li>
                 </ul>
               </li>
-
-              <li></li>
 
               <li className='mt-auto'>
                 <LogoutPopover
