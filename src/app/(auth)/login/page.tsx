@@ -6,6 +6,7 @@ import { WavyBackground } from '@/components/ui/background-waves';
 import { FcGoogle } from 'react-icons/fc';
 import { BsChatLeftHeartFill } from 'react-icons/bs';
 import LoadingButton from '@/components/LoadingButton';
+import { toast } from '@/components/ui/use-toast';
 
 const Login = () => {
   const [loading, setLoading] = useState(false);
@@ -15,9 +16,11 @@ const Login = () => {
       setLoading(true);
       await signIn('google');
     } catch (error) {
-      alert(error);
-
-      return;
+      toast({
+        variant: 'destructive',
+        title: 'Error',
+        description: 'An issue occurred while signing out.',
+      });
     } finally {
       setLoading(false);
     }
