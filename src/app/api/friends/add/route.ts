@@ -12,6 +12,15 @@ export async function POST(request: Request) {
 
     const { email: userEmail } = AddSchema.parse({ email: body.email });
 
+    const existingSession = await getServerSession(authOptions);
+
+    if (!existingSession) {
+      return NextResponse.json(
+        { error: 'You are not authorized.' },
+        { status: 401 }
+      );
+    }
+
     const userID = (await fetchRedis(
       'get',
       `user:email:${userEmail}`
@@ -21,15 +30,6 @@ export async function POST(request: Request) {
       return NextResponse.json(
         { error: 'This user does not exist!' },
         { status: 400 }
-      );
-    }
-
-    const existingSession = await getServerSession(authOptions);
-
-    if (!existingSession) {
-      return NextResponse.json(
-        { error: 'You are not authorized.' },
-        { status: 401 }
       );
     }
 
