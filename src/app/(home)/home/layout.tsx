@@ -2,6 +2,9 @@ import { WavyBackground } from "@/components/ui/background-waves";
 import { LucideIcon, UserRoundPlus, Users } from "lucide-react";
 import Link from "next/link";
 import { BsChatLeftHeartFill } from "react-icons/bs";
+import LogoutPopover from "@/components/LogoutPopover";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 type SidebarOption = {
   id: number;
@@ -25,7 +28,9 @@ const sidebarOptions: SidebarOption[] = [
   }
 ]
 
-const HomeLayout = ({ children }: { children: React.ReactNode }) => {
+const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await getServerSession(authOptions);
+
   return (
     <WavyBackground backgroundFill="white">
       <div className='w-screen h-screen lg:w-[90vw] lg:h-[90vh] overflow-auto flex bg-blue-300/70 text-white lg:rounded-xl backdrop-blur-xl'>
@@ -57,7 +62,7 @@ const HomeLayout = ({ children }: { children: React.ReactNode }) => {
               </li>
 
               <li className="mt-auto">
-                <p>Hello</p>
+                <LogoutPopover userImage={session?.user.image} userName={session?.user.name} userEmail={session?.user.email} />
               </li>
             </ul>
           </nav>
