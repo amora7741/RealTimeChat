@@ -15,7 +15,7 @@ import { Input } from '@/components/ui/input';
 import LoadingButton from './LoadingButton';
 import { toast } from '@/components/ui/use-toast';
 import axios from 'axios';
-import { useState } from'react';
+import { useState } from 'react';
 
 import { AddSchema } from '@/lib/validation/addfriend';
 
@@ -72,12 +72,20 @@ const AddFriendForm = () => {
           name='email'
           render={({ field }) => (
             <FormItem>
-              <FormLabel className='font-semibold text-lg'>Add friend by E-Mail</FormLabel>
+              <FormLabel className='font-semibold text-lg'>
+                Add friend by E-Mail
+              </FormLabel>
               <div className='flex flex-col sm:flex-row gap-4'>
                 <FormControl>
-                  <Input className='text-black' placeholder='123@example.com' {...field} />
+                  <Input
+                    className='text-black'
+                    placeholder='123@example.com'
+                    {...field}
+                  />
                 </FormControl>
-                <LoadingButton type='submit' loading={loading}>Add</LoadingButton>
+                <LoadingButton type='submit' loading={loading}>
+                  Add
+                </LoadingButton>
               </div>
 
               <FormMessage className='absolute right-0' />

@@ -67,7 +67,7 @@ const LogoutPopover = ({
           </div>
         </Button>
       </PopoverTrigger>
-      <PopoverContent side='top' className='bg-transparent border-none'>
+      <PopoverContent side='top' className='bg-white/30 border-none'>
         <LoadingButton onClick={logOut} loading={loading} className='w-full'>
           Log out
         </LoadingButton>
