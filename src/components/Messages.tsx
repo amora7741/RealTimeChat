@@ -1,10 +1,11 @@
 'use client';
 
-import { cn } from '@/lib/utils';
+import { cn, toPusherKey } from '@/lib/utils';
 import { Message } from '@/lib/validation/message';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { format } from 'date-fns';
 import Image from 'next/image';
+import { pusherClient } from '@/lib/pusher';
 
 const formatTime = (time: number) => {
   return format(time, 'KK:mm bb');
@@ -15,15 +16,33 @@ const Messages = ({
   initialMessages,
   sessionImg,
   chatPartner,
+  chatID,
 }: {
   sessionID: string;
   initialMessages: Message[];
   sessionImg: string | null | undefined;
   chatPartner: User;
+  chatID: string;
 }) => {
   const scrollDownRef = useRef<HTMLDivElement | null>(null);
 
   const [messages, setMessages] = useState<Message[]>(initialMessages);
+
+  useEffect(() => {
+    pusherClient.subscribe(toPusherKey(`chat:${chatID}`));
+
+    const messageHandler = (message: Message) => {
+      setMessages((prev) => [message, ...prev]);
+    };
+
+    pusherClient.bind('incoming_message', messageHandler);
+
+    return () => {
+      pusherClient.unsubscribe(toPusherKey(`chat:${chatID}`));
+
+      pusherClient.unbind('incoming_message', messageHandler);
+    };
+  }, []);
 
   return (
     <div
