@@ -34,7 +34,7 @@ const SidebarChatList = ({
           <li key={friend.id}>
             <a href={`/home/chat/${chatLinkConstructor(sessionID, friend.id)}`}>
               <div className='flex items-center justify-between p-2 rounded-lg hover:bg-white/10'>
-                {friend.name}
+                <p className='truncate'>{friend.name}</p>
                 {unseenMessageCount > 0 && (
                   <div className='size-6 rounded-full shrink-0 bg-blue-400/70 flex items-center justify-center text-xs ml-2'>
                     <p>{unseenMessageCount}</p>

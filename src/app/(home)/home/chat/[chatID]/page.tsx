@@ -4,29 +4,28 @@ import { messageArraySchema } from '@/lib/validation/message';
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import Messages from '@/components/Messages';
 
-const getChatMessages = async (chatID: string) => {
+async function getChatMessages(chatId: string) {
   try {
-    const fetchResult: string[] = await fetchRedis(
+    const results: string[] = await fetchRedis(
       'zrange',
-      `chat:${chatID}:messages`,
+      `chat:${chatId}:messages`,
       0,
       -1
     );
 
-    const messagesResult = fetchResult.map(
-      (message) => JSON.parse(message) as Message
-    );
+    const dbMessages = results.map((message) => JSON.parse(message) as Message);
 
-    const reversedMessagesResult = messagesResult.reverse();
+    const reversedDbMessages = dbMessages.reverse();
 
-    const messages = messageArraySchema.parse(reversedMessagesResult);
+    const messages = messageArraySchema.parse(reversedDbMessages);
 
     return messages;
   } catch (error) {
     notFound();
   }
-};
+}
 
 const Chat = async ({ params }: { params: { chatID: string } }) => {
   const { chatID } = params;
@@ -71,6 +70,13 @@ const Chat = async ({ params }: { params: { chatID: string } }) => {
             <p className='text-sm'>{chatPartner.email}</p>
           </div>
         </div>
+
+        <Messages
+          sessionID={session.user.id}
+          initialMessages={initialMessages}
+        />
+
+        <p>Chat Box</p>
       </div>
     </main>
   );
