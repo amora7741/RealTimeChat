@@ -4,6 +4,7 @@ import { cn } from '@/lib/utils';
 import { Message } from '@/lib/validation/message';
 import { useRef, useState } from 'react';
 import { format } from 'date-fns';
+import Image from 'next/image';
 
 const formatTime = (time: number) => {
   return format(time, 'KK:mm bb');
@@ -12,9 +13,13 @@ const formatTime = (time: number) => {
 const Messages = ({
   sessionID,
   initialMessages,
+  sessionImg,
+  chatPartner,
 }: {
   sessionID: string;
   initialMessages: Message[];
+  sessionImg: string | null | undefined;
+  chatPartner: User;
 }) => {
   const scrollDownRef = useRef<HTMLDivElement | null>(null);
 
@@ -36,7 +41,9 @@ const Messages = ({
         return (
           <div key={`${message.id}-${message.timeStamp}`}>
             <div
-              className={cn('flex items-end', { 'justify-end': isCurrentUser })}
+              className={cn('flex gap-2 items-end', {
+                'justify-end': isCurrentUser,
+              })}
             >
               <div
                 className={cn('flex flex-col space-y-2 max-w-xs', {
@@ -55,6 +62,22 @@ const Messages = ({
                   <p>{message.text}</p>
                   <p className='text-xs'>{formatTime(message.timeStamp)}</p>
                 </div>
+              </div>
+              <div
+                className={cn('relative size-8', {
+                  'order-2': isCurrentUser,
+                  'order-1': !isCurrentUser,
+                  invisible: moreMessagesFromUser,
+                })}
+              >
+                <Image
+                  fill
+                  src={
+                    isCurrentUser ? (sessionImg as string) : chatPartner.image
+                  }
+                  className='rounded-full'
+                  alt='Profile picture'
+                />
               </div>
             </div>
           </div>

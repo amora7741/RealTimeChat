@@ -75,6 +75,8 @@ const Chat = async ({ params }: { params: { chatID: string } }) => {
         <Messages
           sessionID={session.user.id}
           initialMessages={initialMessages}
+          sessionImg={session.user.image}
+          chatPartner={chatPartner}
         />
 
         <ChatInput chatPartnerName={chatPartner.name} chatID={chatID} />
