@@ -10,3 +10,7 @@ export function chatLinkConstructor(userID1: string, userID2: string) {
 
   return `${sortedIDs[0]}--${sortedIDs[1]}`;
 }
+
+export function toPusherKey(key: string) {
+  return key.replace(/:/g, '__');
+}

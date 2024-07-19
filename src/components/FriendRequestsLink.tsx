@@ -2,7 +2,9 @@
 
 import Link from 'next/link';
 import { UsersRound } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { pusherClient } from '@/lib/pusher';
+import { toPusherKey } from '@/lib/utils';
 
 const FriendRequestsLink = ({
   sessionID,
@@ -14,6 +16,26 @@ const FriendRequestsLink = ({
   const [pendingRequestCount, setPendingRequestCount] = useState<number>(
     initialPendingRequests
   );
+
+  useEffect(() => {
+    pusherClient.subscribe(
+      toPusherKey(`user:${sessionID}:incoming_friend_requests`)
+    );
+
+    const friendRequestHandler = () => {
+      setPendingRequestCount((prev) => prev + 1);
+    };
+
+    pusherClient.bind('incoming_friend_requests', friendRequestHandler);
+
+    return () => {
+      pusherClient.unsubscribe(
+        toPusherKey(`user:${sessionID}:incoming_friend_requests`)
+      );
+
+      pusherClient.unbind('incoming_friend_requests', friendRequestHandler);
+    };
+  }, []);
 
   return (
     <Link href='/home/requests'>

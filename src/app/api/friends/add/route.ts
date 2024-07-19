@@ -5,6 +5,8 @@ import { NextResponse } from 'next/server';
 import { fetchRedis } from '@/helpers/redis';
 import { db } from '@/lib/db';
 import { ZodError } from 'zod';
+import { pusherServer } from '@/lib/pusher';
+import { toPusherKey } from '@/lib/utils';
 
 export async function POST(request: Request) {
   try {
@@ -65,6 +67,15 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    pusherServer.trigger(
+      toPusherKey(`user:${userID}:incoming_friend_requests`),
+      'incoming_friend_requests',
+      {
+        senderID: existingSession.user.id,
+        senderEmail: existingSession.user.email,
+      }
+    );
 
     db.sadd(`user:${userID}:incoming_friend_requests`, existingSession.user.id);
 

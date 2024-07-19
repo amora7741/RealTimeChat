@@ -1,12 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { UserRoundPlus } from 'lucide-react';
 import LoadingButton from './LoadingButton';
 import { X, Check } from 'lucide-react';
 import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import { toast } from '@/components/ui/use-toast';
+import { pusherClient } from '@/lib/pusher';
+import { toPusherKey } from '@/lib/utils';
 
 const IncomingFriendRequests = ({
   incomingFriendRequests,
@@ -77,6 +79,29 @@ const IncomingFriendRequests = ({
       setDenyLoading(false);
     }
   };
+
+  useEffect(() => {
+    pusherClient.subscribe(
+      toPusherKey(`user:${sessionID}:incoming_friend_requests`)
+    );
+
+    const friendRequestHandler = ({
+      senderID,
+      senderEmail,
+    }: IncomingFriendRequest) => {
+      setFriendRequests((prev) => [...prev, { senderID, senderEmail }]);
+    };
+
+    pusherClient.bind('incoming_friend_requests', friendRequestHandler);
+
+    return () => {
+      pusherClient.unsubscribe(
+        toPusherKey(`user:${sessionID}:incoming_friend_requests`)
+      );
+
+      pusherClient.unbind('incoming_friend_requests', friendRequestHandler);
+    };
+  }, []);
 
   return (
     <>
