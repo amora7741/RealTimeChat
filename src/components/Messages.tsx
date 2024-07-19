@@ -18,7 +18,7 @@ const Messages = ({
   return (
     <div
       id='messages'
-      className='flex flex-col-reverse gap-y-4 overflow-y-auto p-4'
+      className='flex flex-col-reverse gap-y-4 overflow-y-auto py-4'
     >
       <div ref={scrollDownRef} />
 
@@ -26,7 +26,7 @@ const Messages = ({
         const isCurrentUser = message.senderID === sessionID;
 
         const moreMessagesFromUser =
-          messages[index - 1].senderID === messages[index].senderID;
+          messages[index - 1]?.senderID === messages[index].senderID;
 
         return (
           <div key={`${message.id}-${message.timeStamp}`}>
@@ -41,8 +41,10 @@ const Messages = ({
               >
                 <p
                   className={cn('p-4 rounded-sm', {
-                    'bg-blue-400/70': isCurrentUser,
+                    'bg-blue-500/70': isCurrentUser,
                     'bg-white/70 text-black': !isCurrentUser,
+                    'rounded-br-none': !moreMessagesFromUser && isCurrentUser,
+                    'rounded-bl-none': !moreMessagesFromUser && !isCurrentUser,
                   })}
                 >
                   {message.text}

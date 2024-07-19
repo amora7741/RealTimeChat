@@ -28,7 +28,7 @@ const Login = () => {
 
   return (
     <WavyBackground backgroundFill='white'>
-      <div className='bg-blue-300/70 backdrop-blur-xl safari-blur flex flex-col md:rounded-xl w-screen h-screen text-center md:w-fit md:h-fit items-center justify-center gap-8 md:p-8 md:px-24'>
+      <div className='bg-blue-400/70 backdrop-blur-2xl safari-blur flex flex-col md:rounded-xl w-screen h-screen text-center md:w-fit md:h-fit items-center justify-center gap-8 md:p-8 md:px-24'>
         <BsFillChatSquareHeartFill
           fill='white'
           className='size-12 md:size-10'
