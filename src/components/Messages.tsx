@@ -3,6 +3,11 @@
 import { cn } from '@/lib/utils';
 import { Message } from '@/lib/validation/message';
 import { useRef, useState } from 'react';
+import { format } from 'date-fns';
+
+const formatTime = (time: number) => {
+  return format(time, 'KK:mm bb');
+};
 
 const Messages = ({
   sessionID,
@@ -39,16 +44,17 @@ const Messages = ({
                   'order-2 items-start': !isCurrentUser,
                 })}
               >
-                <p
-                  className={cn('p-4 rounded-sm', {
-                    'bg-blue-500/70': isCurrentUser,
-                    'bg-white/70 text-black': !isCurrentUser,
+                <div
+                  className={cn('p-4 rounded-sm flex gap-4', {
+                    'bg-blue-500/30': isCurrentUser,
+                    'bg-white/30 text-black': !isCurrentUser,
                     'rounded-br-none': !moreMessagesFromUser && isCurrentUser,
                     'rounded-bl-none': !moreMessagesFromUser && !isCurrentUser,
                   })}
                 >
-                  {message.text}
-                </p>
+                  <p>{message.text}</p>
+                  <p className='text-xs'>{formatTime(message.timeStamp)}</p>
+                </div>
               </div>
             </div>
           </div>
