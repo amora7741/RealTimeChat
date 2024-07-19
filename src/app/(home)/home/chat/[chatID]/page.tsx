@@ -3,7 +3,7 @@ import { authOptions } from '@/lib/auth';
 import { messageArraySchema } from '@/lib/validation/message';
 import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
-import { useEffect } from 'react';
+import Image from 'next/image';
 
 const getChatMessages = async (chatID: string) => {
   try {
@@ -46,15 +46,32 @@ const Chat = async ({ params }: { params: { chatID: string } }) => {
   }
 
   const chatPartnerID = user.id === userID1 ? userID2 : userID1;
-  const chatPartner = (await fetchRedis(
+  const chatPartnerString = (await fetchRedis(
     'get',
     `user:${chatPartnerID}`
-  )) as User;
+  )) as string;
+  const chatPartner = JSON.parse(chatPartnerString) as User;
   const initialMessages = await getChatMessages(chatID);
 
   return (
     <main className='p-6 w-full'>
-      <h1>{params.chatID}</h1>
+      <div className='grid grid-rows-[auto_1fr_auto] w-full h-full'>
+        <div className='flex items-center gap-2 bg-blue-400/20 rounded-sm p-4'>
+          <div className='relative size-14 border rounded-full'>
+            <Image
+              fill
+              referrerPolicy='no-referrer'
+              className='rounded-full'
+              src={chatPartner.image}
+              alt={`${chatPartner.name} profile picture`}
+            />
+          </div>
+          <div className='flex flex-col'>
+            <p className='font-bold'>{chatPartner.name}</p>
+            <p className='text-sm'>{chatPartner.email}</p>
+          </div>
+        </div>
+      </div>
     </main>
   );
 };
