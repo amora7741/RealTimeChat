@@ -18,7 +18,7 @@ const Messages = ({
   return (
     <div
       id='messages'
-      className='flex flex-col-reverse gap-y-4 overflow-y-auto py-4'
+      className='flex flex-col-reverse gap-y-2 overflow-y-auto py-4'
     >
       <div ref={scrollDownRef} />
 
