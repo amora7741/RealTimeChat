@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.safari-blur {
+  -webkit-backdrop-filter: blur(24px);
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
