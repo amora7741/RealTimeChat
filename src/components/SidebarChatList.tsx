@@ -28,12 +28,19 @@ const SidebarChatList = ({
       {friends.sort().map((friend) => {
         const unseenMessageCount = unseenMessages.filter((message) => {
           return message.senderID === friend.id;
-        });
+        }).length;
 
         return (
           <li key={friend.id}>
             <a href={`/home/chat/${chatLinkConstructor(sessionID, friend.id)}`}>
-              Chat
+              <div className='flex items-center justify-between p-2 rounded-lg hover:bg-white/10'>
+                {friend.name}
+                {unseenMessageCount > 0 && (
+                  <div className='size-6 rounded-full shrink-0 bg-blue-400/70 flex items-center justify-center text-xs ml-2'>
+                    <p>{unseenMessageCount}</p>
+                  </div>
+                )}
+              </div>
             </a>
           </li>
         );
