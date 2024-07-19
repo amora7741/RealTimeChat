@@ -5,6 +5,7 @@ import { getServerSession } from 'next-auth';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
 import Messages from '@/components/Messages';
+import ChatInput from '@/components/ChatInput';
 
 async function getChatMessages(chatId: string) {
   try {
@@ -76,7 +77,7 @@ const Chat = async ({ params }: { params: { chatID: string } }) => {
           initialMessages={initialMessages}
         />
 
-        <p>Chat Box</p>
+        <ChatInput chatPartnerName={chatPartner.name} chatID={chatID} />
       </div>
     </main>
   );
