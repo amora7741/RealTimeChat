@@ -56,7 +56,7 @@ const Chat = async ({ params }: { params: { chatID: string } }) => {
   return (
     <main className='p-6 w-full'>
       <div className='grid grid-rows-[auto_1fr_auto] w-full h-full'>
-        <div className='flex items-center gap-2 bg-blue-400/20 rounded-sm p-4'>
+        <div className='flex items-center gap-2 border-b border-b-white/50 p-4'>
           <div className='relative size-14 border rounded-full'>
             <Image
               fill

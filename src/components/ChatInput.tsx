@@ -52,7 +52,11 @@ const ChatInput = ({
         }}
         onChange={(e) => setMessage(e.target.value)}
       />
-      <LoadingButton loading={loading} className='h-full' onClick={sendMessage}>
+      <LoadingButton
+        loading={loading}
+        className='h-full bg-blue-500/70'
+        onClick={sendMessage}
+      >
         <CornerRightUp />
       </LoadingButton>
     </div>

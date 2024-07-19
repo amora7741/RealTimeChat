@@ -45,8 +45,8 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
 
   return (
     <WavyBackground backgroundFill='white'>
-      <div className='w-screen h-screen lg:w-[90vw] lg:h-[90vh] overflow-auto flex bg-blue-300/70 text-white lg:rounded-xl backdrop-blur-xl safari-blur'>
-        <div className='h-full w-full overflow-y-auto max-w-xs flex flex-col gap-y-12 p-6 bg-blue-300/30 lg:rounded-tl-xl lg:rounded-bl-xl'>
+      <div className='w-screen h-screen lg:w-[90vw] lg:h-[90vh] overflow-auto flex bg-blue-400/70 text-white lg:rounded-xl backdrop-blur-2xl safari-blur'>
+        <div className='h-full w-full overflow-y-auto max-w-xs flex flex-col gap-y-12 p-6 bg-blue-400/30 lg:rounded-tl-xl lg:rounded-bl-xl'>
           <Link className='w-fit' href='/home'>
             <BsFillChatSquareHeartFill className='size-12' />
           </Link>
