@@ -5,6 +5,8 @@ import { db } from '@/lib/db';
 
 import { z, ZodError } from 'zod';
 import { fetchRedis } from '@/helpers/redis';
+import { pusherServer } from '@/lib/pusher';
+import { toPusherKey } from '@/lib/utils';
 
 export async function POST(request: Request) {
   try {
@@ -46,6 +48,12 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
+
+    pusherServer.trigger(
+      toPusherKey(`user:${userID}:friends`),
+      'new_friend',
+      {}
+    );
 
     await db.sadd(`user:${existingSession.user.id}:friends`, userID);
     await db.sadd(`user:${userID}:friends`, existingSession.user.id);
