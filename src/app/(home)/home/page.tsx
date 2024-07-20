@@ -48,8 +48,8 @@ export default async function Home() {
             )}`}
             className='flex justify-between relative sm:flex sm:items-center p-4 rounded-sm bg-blue-400/30'
           >
-            <div className='flex gap-2'>
-              <div className='relative size-12'>
+            <div className='flex items-center gap-2 truncate'>
+              <div className='relative size-6 md:size-12 shrink-0'>
                 <Image
                   referrerPolicy='no-referrer'
                   className='rounded-full'
@@ -68,7 +68,7 @@ export default async function Home() {
                 </p>
               </div>
             </div>
-            <ChevronRight className='size-7' />
+            <ChevronRight className='size-7 shrink-0' />
           </Link>
         ))
       ) : (
