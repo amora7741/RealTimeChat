@@ -5,7 +5,6 @@ import {
   Dialog,
   DialogBackdrop,
   DialogPanel,
-  DialogTitle,
   TransitionChild,
 } from '@headlessui/react';
 import { UserRoundPlus, X } from 'lucide-react';
@@ -131,7 +130,7 @@ const MobileChatLayout = ({
                           </ul>
                         </li>
 
-                        <li className='mt-auto'>
+                        <li className='mt-auto mb-8'>
                           <LogoutPopover
                             userImage={session?.user.image}
                             userName={session?.user.name}

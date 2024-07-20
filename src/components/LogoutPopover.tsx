@@ -58,7 +58,7 @@ const LogoutPopover = ({
                   />
                 )}
               </div>
-              <div className='hidden sm:flex sm:flex-col items-start'>
+              <div className='flex flex-col items-start'>
                 <p className='font-semibold'>{userName || 'No user'}</p>
                 <p className='text-xs '>{userEmail || ''}</p>
               </div>
