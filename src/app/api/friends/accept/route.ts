@@ -49,19 +49,32 @@ export async function POST(request: Request) {
       );
     }
 
-    pusherServer.trigger(
-      toPusherKey(`user:${userID}:friends`),
-      'new_friend',
-      {}
-    );
+    const [userString, friendString] = (await Promise.all([
+      fetchRedis('get', `user:${existingSession.user.id}`),
+      fetchRedis('get', `user:${userID}`),
+    ])) as [string, string];
 
-    await db.sadd(`user:${existingSession.user.id}:friends`, userID);
-    await db.sadd(`user:${userID}:friends`, existingSession.user.id);
+    const user = JSON.parse(userString) as User;
+    const friend = JSON.parse(friendString) as User;
 
-    await db.srem(
-      `user:${existingSession.user.id}:incoming_friend_requests`,
-      userID
-    );
+    await Promise.all([
+      pusherServer.trigger(
+        toPusherKey(`user:${userID}:friends`),
+        'new_friend',
+        user
+      ),
+      pusherServer.trigger(
+        toPusherKey(`user:${existingSession.user.id}:friends`),
+        'new_friend',
+        friend
+      ),
+      db.sadd(`user:${existingSession.user.id}:friends`, userID),
+      db.sadd(`user:${userID}:friends`, existingSession.user.id),
+      db.srem(
+        `user:${existingSession.user.id}:incoming_friend_requests`,
+        userID
+      ),
+    ]);
 
     return NextResponse.json({ message: 'OK' }, { status: 200 });
   } catch (error) {
