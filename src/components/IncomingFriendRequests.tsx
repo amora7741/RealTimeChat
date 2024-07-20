@@ -101,7 +101,7 @@ const IncomingFriendRequests = ({
 
       pusherClient.unbind('incoming_friend_requests', friendRequestHandler);
     };
-  }, []);
+  }, [sessionID]);
 
   return (
     <>

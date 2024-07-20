@@ -42,7 +42,7 @@ const Messages = ({
 
       pusherClient.unbind('incoming_message', messageHandler);
     };
-  }, []);
+  }, [chatID]);
 
   return (
     <div

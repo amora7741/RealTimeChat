@@ -35,7 +35,7 @@ const FriendRequestsLink = ({
 
       pusherClient.unbind('incoming_friend_requests', friendRequestHandler);
     };
-  }, []);
+  }, [sessionID]);
 
   return (
     <Link href='/home/requests'>
