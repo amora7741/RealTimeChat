@@ -36,7 +36,7 @@ export default async function Home() {
   );
 
   return (
-    <main className='p-6 w-full'>
+    <>
       <h1 className='text-4xl font-extrabold mb-8'>Recent Chats</h1>
       {friendsWithLastMessage.length > 0 ? (
         friendsWithLastMessage.map((friend) => (
@@ -74,6 +74,6 @@ export default async function Home() {
       ) : (
         <p>No recent chats!</p>
       )}
-    </main>
+    </>
   );
 }
