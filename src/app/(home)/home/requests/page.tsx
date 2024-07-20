@@ -30,7 +30,7 @@ const RequestsPage = async () => {
   );
 
   return (
-    <main className='p-6 w-full'>
+    <main className='w-full'>
       <h1 className='text-4xl font-extrabold mb-8'>Incoming Friend Requests</h1>
       <div className='flex flex-col gap-y-4'>
         <IncomingFriendRequests

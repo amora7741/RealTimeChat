@@ -54,35 +54,33 @@ const Chat = async ({ params }: { params: { chatID: string } }) => {
   const initialMessages = await getChatMessages(chatID);
 
   return (
-    <main className='p-6 w-full'>
-      <div className='grid grid-rows-[auto_1fr_auto] w-full h-full'>
-        <div className='flex items-center gap-2 border-b border-b-white/50 p-4'>
-          <div className='relative size-14 border rounded-full'>
-            <Image
-              fill
-              referrerPolicy='no-referrer'
-              className='rounded-full'
-              src={chatPartner.image}
-              alt={`${chatPartner.name} profile picture`}
-            />
-          </div>
-          <div className='flex flex-col'>
-            <p className='font-bold'>{chatPartner.name}</p>
-            <p className='text-sm'>{chatPartner.email}</p>
-          </div>
+    <div className='grid grid-rows-[auto_1fr_auto] w-full h-full'>
+      <div className='flex items-center gap-2 border-b border-b-white/50 p-4'>
+        <div className='relative size-14 border rounded-full'>
+          <Image
+            fill
+            referrerPolicy='no-referrer'
+            className='rounded-full'
+            src={chatPartner.image}
+            alt={`${chatPartner.name} profile picture`}
+          />
         </div>
-
-        <Messages
-          sessionID={session.user.id}
-          initialMessages={initialMessages}
-          sessionImg={session.user.image}
-          chatPartner={chatPartner}
-          chatID={chatID}
-        />
-
-        <ChatInput chatPartnerName={chatPartner.name} chatID={chatID} />
+        <div className='flex flex-col'>
+          <p className='font-bold'>{chatPartner.name}</p>
+          <p className='text-sm'>{chatPartner.email}</p>
+        </div>
       </div>
-    </main>
+
+      <Messages
+        sessionID={session.user.id}
+        initialMessages={initialMessages}
+        sessionImg={session.user.image}
+        chatPartner={chatPartner}
+        chatID={chatID}
+      />
+
+      <ChatInput chatPartnerName={chatPartner.name} chatID={chatID} />
+    </div>
   );
 };
 

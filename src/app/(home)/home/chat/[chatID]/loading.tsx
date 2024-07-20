@@ -3,7 +3,7 @@ import { Ellipsis } from 'lucide-react';
 
 const LoadingPage = () => {
   return (
-    <div className='p-6 w-full'>
+    <div className='w-full'>
       <div className='grid grid-rows-[auto_1fr_auto] w-full h-full'>
         <div className='p-4 flex items-center gap-2'>
           <Skeleton className='w-[54px] h-[54px] rounded-full' />
