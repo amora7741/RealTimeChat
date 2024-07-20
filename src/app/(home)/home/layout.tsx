@@ -47,10 +47,10 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <WavyBackground backgroundFill='white'>
       <div className='w-screen h-screen lg:w-[90vw] lg:h-[90vh] overflow-auto flex bg-blue-400/70 text-white lg:rounded-xl backdrop-blur-2xl safari-blur'>
-        <div className='md:hidden flex'>
+        <div className='lg:hidden flex'>
           <MobileChatLayout />
         </div>
-        <div className='hidden md:flex h-full w-full overflow-y-auto max-w-xs  flex-col gap-y-12 p-6 bg-blue-400/30 lg:rounded-tl-xl lg:rounded-bl-xl'>
+        <div className='hidden lg:flex h-full w-full overflow-y-auto max-w-xs  flex-col gap-y-12 p-6 bg-blue-400/30 lg:rounded-tl-xl lg:rounded-bl-xl'>
           <Link className='w-fit' href='/home'>
             <BsFillChatSquareHeartFill className='size-12' />
           </Link>
@@ -101,7 +101,7 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
             </ul>
           </nav>
         </div>
-        <main className='pt-[4.5rem] p-6 md:p-6 w-full'>{children}</main>
+        <main className='pt-[4.5rem] p-6 lg:p-6 w-full'>{children}</main>
       </div>
     </WavyBackground>
   );
