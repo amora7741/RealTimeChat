@@ -11,13 +11,7 @@ import { notFound } from 'next/navigation';
 import { getFriendsByID } from '@/helpers/get-friends-by-id';
 import SidebarChatList from '@/components/SidebarChatList';
 import MobileChatLayout from '@/components/MobileChatLayout';
-
-type SidebarOption = {
-  id: number;
-  name: string;
-  href: string;
-  Icon: LucideIcon;
-};
+import { SidebarOption } from '@/types/sidebar';
 
 const sidebarOptions: SidebarOption[] = [
   {
@@ -48,7 +42,11 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
     <WavyBackground backgroundFill='white'>
       <div className='w-screen h-screen lg:w-[90vw] lg:h-[90vh] overflow-auto flex bg-blue-400/70 text-white lg:rounded-xl backdrop-blur-2xl safari-blur'>
         <div className='lg:hidden flex'>
-          <MobileChatLayout />
+          <MobileChatLayout
+            friends={friends}
+            session={session}
+            pendingRequestCount={pendingRequestCount}
+          />
         </div>
         <div className='hidden lg:flex h-full w-full overflow-y-auto max-w-xs  flex-col gap-y-12 p-6 bg-blue-400/30 lg:rounded-tl-xl lg:rounded-bl-xl'>
           <Link className='w-fit' href='/home'>

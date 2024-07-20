@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
   Dialog,
   DialogBackdrop,
@@ -8,14 +8,43 @@ import {
   DialogTitle,
   TransitionChild,
 } from '@headlessui/react';
-import { X } from 'lucide-react';
+import { UserRoundPlus, X } from 'lucide-react';
 import Link from 'next/link';
 import { BsFillChatSquareHeartFill } from 'react-icons/bs';
 import { Menu } from 'lucide-react';
 import { Button } from './ui/button';
+import { SidebarOption } from '@/types/sidebar';
+import { Session } from 'next-auth';
+import { usePathname } from 'next/navigation';
+import SidebarChatList from './SidebarChatList';
+import FriendRequestsLink from './FriendRequestsLink';
+import LogoutPopover from './LogoutPopover';
 
-const MobileChatLayout = () => {
+const sidebarOptions: SidebarOption[] = [
+  {
+    id: 1,
+    name: 'Add Friend',
+    href: '/home/addfriend',
+    Icon: UserRoundPlus,
+  },
+];
+
+const MobileChatLayout = ({
+  friends,
+  session,
+  pendingRequestCount,
+}: {
+  friends: User[];
+  session: Session;
+  pendingRequestCount: number;
+}) => {
   const [open, setOpen] = useState(false);
+
+  const pathName = usePathname();
+
+  useEffect(() => {
+    setOpen(false);
+  }, [pathName]);
 
   return (
     <div className='fixed bg-blue-500/70 border-b top-0 inset-x-0 py-2 px-4'>
@@ -57,14 +86,60 @@ const MobileChatLayout = () => {
                     </button>
                   </div>
                 </TransitionChild>
-                <div className='flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl'>
+                <div className='flex h-full flex-col overflow-y-scroll bg-blue-400/70 text-white py-6 shadow-xl'>
                   <div className='px-4 sm:px-6'>
-                    <DialogTitle className='text-base font-semibold leading-6 text-gray-900'>
-                      Panel title
-                    </DialogTitle>
+                    <BsFillChatSquareHeartFill className='size-8' />
                   </div>
                   <div className='relative mt-6 flex-1 px-4 sm:px-6'>
-                    {/* Your content */}
+                    <nav className='flex flex-col flex-1 h-full'>
+                      <ul className='flex flex-col flex-1 gap-y-8'>
+                        {friends.length > 0 && (
+                          <li>
+                            <p className='font-bold uppercase text-lg'>
+                              Your Chats
+                            </p>
+                            <SidebarChatList
+                              sessionID={session.user.id}
+                              friends={friends}
+                            />
+                          </li>
+                        )}
+
+                        <li>
+                          <p className='font-bold uppercase text-lg mb-2'>
+                            Social
+                          </p>
+                          <ul className='space-y-2'>
+                            {sidebarOptions.map((option) => (
+                              <li key={option.id}>
+                                <Link href={option.href}>
+                                  <div className='flex items-center p-2 rounded-lg hover:bg-white/10'>
+                                    <option.Icon className='size-7 mr-2 shrink-0' />
+                                    <p className='truncate font-semibold'>
+                                      {option.name}
+                                    </p>
+                                  </div>
+                                </Link>
+                              </li>
+                            ))}
+                            <li>
+                              <FriendRequestsLink
+                                sessionID={session?.user.id}
+                                initialPendingRequests={pendingRequestCount}
+                              />
+                            </li>
+                          </ul>
+                        </li>
+
+                        <li className='mt-auto'>
+                          <LogoutPopover
+                            userImage={session?.user.image}
+                            userName={session?.user.name}
+                            userEmail={session?.user.email}
+                          />
+                        </li>
+                      </ul>
+                    </nav>
                   </div>
                 </div>
               </DialogPanel>
