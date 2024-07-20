@@ -72,6 +72,9 @@ const SidebarChatList = ({
     return () => {
       pusherClient.unsubscribe(toPusherKey(`user:${sessionID}:chats`));
       pusherClient.unsubscribe(toPusherKey(`user:${sessionID}:friends`));
+
+      pusherClient.unbind('new_message', chatHandler);
+      pusherClient.unbind('new_friend', friendHandler);
     };
   }, [pathName, sessionID, router]);
 
