@@ -22,18 +22,28 @@ const FriendRequestsLink = ({
       toPusherKey(`user:${sessionID}:incoming_friend_requests`)
     );
 
+    pusherClient.subscribe(toPusherKey(`user:${sessionID}:friends`));
+
     const friendRequestHandler = () => {
       setPendingRequestCount((prev) => prev + 1);
     };
 
+    const newFriendHandler = () => {
+      setPendingRequestCount((prev) => prev - 1);
+    };
+
     pusherClient.bind('incoming_friend_requests', friendRequestHandler);
+    pusherClient.bind('new_friend', newFriendHandler);
 
     return () => {
       pusherClient.unsubscribe(
         toPusherKey(`user:${sessionID}:incoming_friend_requests`)
       );
 
+      pusherClient.unsubscribe(toPusherKey(`user:${sessionID}:friends`));
+
       pusherClient.unbind('incoming_friend_requests', friendRequestHandler);
+      pusherClient.unbind('new_friend', newFriendHandler);
     };
   }, [sessionID]);
 

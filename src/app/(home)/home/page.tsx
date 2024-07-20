@@ -26,7 +26,10 @@ export default async function Home() {
         -1
       )) as string[];
 
-      const lastMessage = JSON.parse(lastMessageString) as Message;
+      let lastMessage = null;
+      if (lastMessageString) {
+        lastMessage = JSON.parse(lastMessageString) as Message;
+      }
 
       return {
         ...friend,
@@ -61,10 +64,10 @@ export default async function Home() {
               <div className='flex flex-col'>
                 <p className='font-semibold'>{friend.name}</p>
                 <p className='max-w-md truncate'>
-                  {friend.lastMessage.senderID === session.user.id
+                  {friend.lastMessage?.senderID === session.user.id
                     ? 'You: '
                     : ''}
-                  {friend.lastMessage.text}
+                  {friend.lastMessage?.text}
                 </p>
               </div>
             </div>
