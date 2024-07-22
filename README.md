@@ -20,6 +20,7 @@ This chat app allows users to message each other in real time, emulating popular
     * `PUSHER_APP_ID` create Pusher Channel -> App Keys -> app_id
     * `NEXT_PUBLIC_PUSHER_APP_KEY` create Pusher Channel -> App Keys -> key
     * `PUSHER_APP_SECRET` create Pusher Channel -> App Keys -> secret
+    * Update `cluster` in `src/lib/pusher.ts` to appropriate cluster in App keys
 
 * Run `npm i` to install the required dependencies
 * Run `npm run dev` to start the project and navigate to `http://localhost:3000` to see the project in action 
