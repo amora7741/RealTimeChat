@@ -24,7 +24,11 @@ This chat app allows users to message each other in real time, emulating popular
 * Run `npm i` to install the required dependencies
 * Run `npm run dev` to start the project and navigate to `http://localhost:3000` to see the project in action 
 
-![image](https://github.com/amora7741/XClone/assets/104049707/3dd01a1c-aa21-4086-893e-8b131f849473)
-![image](https://github.com/amora7741/XClone/assets/104049707/e99c3f2b-755f-42ca-9587-5dc7812d360d)
-![image](https://github.com/amora7741/XClone/assets/104049707/f0d2eeed-818d-4bfb-98e3-4502c84afdf4)
+
+![Screenshot_1](https://github.com/user-attachments/assets/d1e3e633-41a4-4958-93ae-1599865a5828)
+![Adduser](https://github.com/user-attachments/assets/96b0dc24-831c-47f9-9aba-3abc54b54f3e)
+![Friendrequest](https://github.com/user-attachments/assets/312c88a0-432f-46f4-a248-f2deed32eeff)
+![Notification](https://github.com/user-attachments/assets/d709b9cf-31f8-4995-885f-b710759f33d9)
+![Chat](https://github.com/user-attachments/assets/e2b90279-8ce5-4d08-afa9-b1d1f74cb53a)
+
 
