@@ -99,7 +99,9 @@ const HomeLayout = async ({ children }: { children: React.ReactNode }) => {
             </ul>
           </nav>
         </div>
-        <main className='pt-[4.5rem] p-6 lg:p-6 w-full'>{children}</main>
+        <main className='pt-[4.5rem] p-6 lg:p-6 w-full h-full max-h-[calc(100vh-57px)]'>
+          {children}
+        </main>
       </div>
     </WavyBackground>
   );
