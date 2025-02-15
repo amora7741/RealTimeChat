@@ -25,7 +25,10 @@ const ChatInput = ({
     try {
       await axios.post('/api/message/send', { text: message, chatID });
       setMessage('');
-      textAreaRef.current?.focus();
+
+      setTimeout(() => {
+        textAreaRef.current?.focus();
+      }, 1);
     } catch {
       toast({
         variant: 'destructive',
