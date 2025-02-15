@@ -66,16 +66,20 @@ export async function POST(request: NextRequest) {
 
     const sender = JSON.parse(senderString) as User;
 
-    pusherServer.trigger(
+    await pusherServer.trigger(
       toPusherKey(`chat:${chatID}`),
       'incoming_message',
       message
     );
 
-    pusherServer.trigger(toPusherKey(`user:${friendID}:chats`), 'new_message', {
-      ...message,
-      senderName: sender.name,
-    });
+    await pusherServer.trigger(
+      toPusherKey(`user:${friendID}:chats`),
+      'new_message',
+      {
+        ...message,
+        senderName: sender.name,
+      }
+    );
 
     await db.zadd(`chat:${chatID}:messages`, {
       score: timeStamp,
